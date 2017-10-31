@@ -30,7 +30,7 @@
       # Redeploy apps: oc env dc -l app JAEGER_SERVER_HOSTNAME=jaeger-all-in-one
     - name: Install Jeager
       shell: "oc process -f https://raw.githubusercontent.com/jaegertracing/jaeger-openshift/0.1.2/all-in-one/jaeger-all-in-one-template.yml | oc create -f - && oc expose service jaeger-all-in-one --name jaeger-msa-domain --hostname=jaeger-{{ project_name }}.{{ domain }}"
-      when: "{{ deploy_jaeger }}"
+      when: "deploy_jaeger"
       register: command_result
       failed_when: "'exists' not in command_result.stderr and command_result.rc != 0"
       changed_when: "'exists' not in command_result.stderr"
@@ -88,6 +88,11 @@
       tags:
         - openshift
 
+    - name: Setup Frontend project to know where to points requests
+      shell: "oc env dc/frontend OS_PROJECT={{ project_name }}"
+      tags:
+        - openshift
+
     - name: Create OpenShift Readiness Probe for applications
       shell: "oc set probe dc/{{ item.name }} --readiness --get-url={{ item.probe }}"
       register: command_result
@@ -103,6 +108,31 @@
       with_items: "{{ msa_projects }}"
       # Avoid  no Jolokia projects
       when: "item.jolokia != False"
+      tags:
+        - openshift
+
+    - name: Checkout LRA template from Github
+      git:
+        repo: "https://github.com/jbosstm/jboss-dockerfiles"
+        dest: "{{ workdir }}/jboss-dockerfiles"
+        update: yes
+      when: "clone_modules"
+      tags:
+        - git
+
+    - name: Import LRA template
+      shell: "cat {{ workdir }}/jboss-dockerfiles/lra/openshift-template/lra-coordinator-template.yaml | oc create -f -"
+      register: command_result
+      failed_when: "'exists' not in command_result.stderr and command_result.rc != 0"
+      changed_when: "'exists' not in command_result.stderr"
+      tags:
+        - openshift
+
+    - name: Create OpenShift applications for LRA
+      shell: "oc new-app --template=lra-coordinator -p APPLICATION_NAME=lra-coordinator"
+      register: command_result
+      failed_when: "'exists' not in command_result.stderr and command_result.rc != 0"
+      changed_when: "'exists' not in command_result.stderr"
       tags:
         - openshift
 

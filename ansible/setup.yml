@@ -21,11 +21,13 @@
 
 - name: Checkout source code from Github
   git:
-    repo: "https://github.com/redhat-helloworld-msa/{{ item.name }}"
+    repo: "https://github.com/ochaloup/{{ item.name }}"
     dest: "{{ workdir }}/{{ item.name }}"
     update: yes
+    version: "lra"
+    refspec: "lra"
   with_items: "{{ msa_projects }}"
-  when: "{{ clone_modules }}"
+  when: "clone_modules"
   tags:
     - git
 

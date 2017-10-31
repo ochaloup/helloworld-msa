@@ -22,7 +22,7 @@ Choose one of the following options/approaches to deploy this microservice.
 ##### Basic project creation
 
 ----
-$ git clone https://github.com/redhat-helloworld-msa/bonjour
+$ git clone https://github.com/ochaloup/bonjour -b lra
 $ cd bonjour/
 $ oc new-build --binary --name=bonjour -l app=bonjour
 $ npm install; oc start-build bonjour --from-dir=. --follow

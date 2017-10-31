@@ -43,6 +43,9 @@ $ oc env dc/frontend OS_SUBDOMAIN=`minishift ip`.nip.io
 
 # Example: OS_SUBDOMAIN=192.168.64.11.nip.io
 $ oc env dc/frontend OS_SUBDOMAIN=192.168.64.11.nip.io
+
+# this is a difference against the msa setup as we use different project name  
+oc env dc/frontend OS_PROJECT=helloworld-msa-lra
 ----
 
 ##### (Optional) Enable Readiness probe

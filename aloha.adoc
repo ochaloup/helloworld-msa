@@ -20,7 +20,7 @@
 ##### Basic project creation
 
 ----
-$ git clone https://github.com/redhat-helloworld-msa/aloha
+$ git clone https://github.com/ochaloup/aloha -b lra
 $ cd aloha/
 $ oc new-build --binary --name=aloha -l app=aloha
 $ mvn package; oc start-build aloha --from-dir=. --follow

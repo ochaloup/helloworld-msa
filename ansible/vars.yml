@@ -1,10 +1,10 @@
 ---
 # UNCOMENT define the Absolute path where you want to checkout the sourcecode
-#workdir: "{{ ansible_user_dir }}/helloworld-msa-src"
+workdir: "/home/ochaloup/tmp/msa-sources"
 # UNCOMENT Define the OpenShift host:port address
-#openshift: 192.168.64.11:8443
+openshift: 192.168.99.100:8443
 # Customize the domain of the project
-domain: app.192.168.64.11.nip.io
+domain: app.192.168.99.100.nip.io
 # Your OpenShift credentials
 username: developer
 password: developer
@@ -14,7 +14,7 @@ admin_password: "''"
 # Uncomment the following line to adjust the SCC (not using CDK3/minishift)
 adjust_scc: true
 # Define the name of the OpenShift project
-project_name: helloworld-msa
+project_name: helloworld-msa-lra
 
 # Optional parts
 # Some users might have the MSA modules cloned locally already. For those cases, make this 'false' and

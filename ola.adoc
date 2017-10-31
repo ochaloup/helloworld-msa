@@ -20,7 +20,7 @@
 ##### Basic project creation
 
 ----
-$ git clone https://github.com/redhat-helloworld-msa/ola
+$ git clone https://github.com/ochaloup/ola -b lra
 $ cd ola/
 $ oc new-build --binary --name=ola -l app=ola
 $ mvn package; oc start-build ola --from-dir=. --follow

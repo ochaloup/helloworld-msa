@@ -20,7 +20,7 @@
 ##### Basic project creation
 
 ----
-$ git clone https://github.com/redhat-helloworld-msa/hola
+$ git clone https://github.com/ochaloup/hola -b lra
 $ cd hola/
 $ oc new-build --binary --name=hola -l app=hola
 $ mvn package; oc start-build hola --from-dir=. --follow
